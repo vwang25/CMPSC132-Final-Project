@@ -1,12 +1,13 @@
 import random
 
-def validate_number(number):
+def get_valid_number(prompt):
     try:
-        (int)(number)
+        return int(input(prompt))
     except ValueError:
-        return "Please enter a number."
+        return None
 
-def get_max_attempts(difficulty):
+def get_max_attempts():
+    difficulty = input("Which level would you like to play? Please select easy, medium, or hard: ").lower()
     if difficulty == "easy":
         return 10
     elif difficulty == "medium":
@@ -14,6 +15,38 @@ def get_max_attempts(difficulty):
     elif difficulty == "hard":
         return 3
     else:
-        return "Invalid input."
-    
+        return None
 
+def number_guessing_game():
+    play = input("Would you like to play? Please enter yes or no: ").lower()
+    while play == "yes":
+        number_to_be_guessed = random.randint(1, 100)
+        max_attempts = get_max_attempts()
+        while max_attempts is None:
+            print("Invalid choice. Please enter easy, medium, or hard.")
+            max_attempts = get_max_attempts()
+        print(f"You have {max_attempts} attempts. Good luck!")
+        user_guess = get_valid_number("Please guess a number from 1 to 100, inclusive: ")
+        while user_guess is None:
+            print("Invalid input. Please enter a whole number.")
+            user_guess = get_valid_number("Please guess a number from 1 to 100, inclusive: ")
+        attempts = 1
+        while user_guess != number_to_be_guessed and attempts < max_attempts:
+            if user_guess > number_to_be_guessed:
+                print("Too high!")
+            else:
+                print("Too low!")
+            attempts += 1
+            user_guess = get_valid_number(f"Please guess again ({attempts}/{max_attempts}): ")
+        if user_guess == number_to_be_guessed:
+            print(f"Correct! Congratulations! You guessed the number in {attempts} attempt(s).")
+        else:
+            print(f"You used up all of your attempts. The correct number was {number_to_be_guessed}.")
+        play = input("Would you like to play again? Please enter yes or no: ").lower()
+    print("Game ended. Thanks for playing!")
+
+def main():
+    number_guessing_game()
+
+if __name__ == "__main__":
+    main()
