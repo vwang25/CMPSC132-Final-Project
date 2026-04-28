@@ -1,0 +1,8 @@
+import random
+
+def validate_number(number):
+    try:
+        (int)(number)
+    except ValueError:
+        return "Please enter a number."
+
