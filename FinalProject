@@ -6,3 +6,14 @@ def validate_number(number):
     except ValueError:
         return "Please enter a number."
 
+def get_max_attempts(difficulty):
+    if difficulty == "easy":
+        return 10
+    elif difficulty == "medium":
+        return 6
+    elif difficulty == "hard":
+        return 3
+    else:
+        return "Invalid input."
+    
+
